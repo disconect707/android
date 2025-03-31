@@ -1,0 +1,25 @@
+stages:
+  - build
+  - test
+
+variables:
+  PROJECT_NAME: "first"
+  SCHEME: "first"
+  DESTINATION: "platform=iOS Simulator,name=iPhone 15,OS=17.2"
+
+before_script:
+  - xcodebuild -version
+
+build:
+  stage: build
+  script:
+    - xcodebuild clean build -project $PROJECT_NAME.xcodeproj -scheme $SCHEME -destination "$DESTINATION"
+  tags:
+    - macos-runner
+
+test:
+  stage: test
+  script:
+    - xcodebuild test -project $PROJECT_NAME.xcodeproj -scheme $SCHEME -destination "$DESTINATION"
+  tags:
+    - macos-runner
